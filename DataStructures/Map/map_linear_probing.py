@@ -56,12 +56,26 @@ def put(my_map, key, value):
 def contains():
     pass
 
-def get():
-    pass
+def get(my_map, key):
+    n = my_map["capacity"]
+    index = mf.hash_value(my_map,key)
+    for i in range(n):
+        entrada = arl.get_element(my_map["table"], index)
+        llave = entrada["key"]
+        if llave is None:
+            return None
+        
+        if key == llave:
+            return entrada["value"]
+        
+        index = (index +1) %n
+        
+    return None
+    
 
 def remove():
     pass
 
-def size ():
-    pass
+def size(my_map):
+    return my_map["size"]
 
