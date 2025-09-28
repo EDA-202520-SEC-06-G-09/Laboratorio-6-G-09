@@ -23,17 +23,35 @@ def new_map(num_elements, load_factor, prime=109345121):
         "scale": scale, 
         "shift": shift,
         "table": tabla,
-        "current_factor": 0, 
-        "limit_factor" : load_factor, 
+        "current factor": 0, 
+        "limit factor" : load_factor, 
         "size": 0 
         
     }
     
     return mapa
 
-def put():
+def put(my_map, key, value):
     
-    pass
+    capacidad = my_map["capacity"]
+    pos = mf.hash_value(my_map, key)
+    
+    for i in range(0, capacidad):
+        casilla = (pos + i) % capacidad
+        entradas = my_map["table"]["elements"][casilla]
+        
+        if entradas["key"] == key:
+            mpe.set_value(entradas, value)
+            return my_map
+        
+        if entradas["key"] == None:
+            n_entrada = mpe.new_map_entry(key, value)
+            my_map["table"]["elements"][casilla] = n_entrada
+            my_map["size"] += 1
+            my_map["current factor"] = my_map["size"] / capacidad
+            
+            return my_map
+        
 
 def contains():
     pass
