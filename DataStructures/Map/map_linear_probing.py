@@ -23,8 +23,8 @@ def new_map(num_elements, load_factor, prime=109345121):
         "scale": scale, 
         "shift": shift,
         "table": tabla,
-        "current factor": 0, 
-        "limit factor" : load_factor, 
+        "current_factor": 0, 
+        "limit_factor" : load_factor, 
         "size": 0 
         
     }
