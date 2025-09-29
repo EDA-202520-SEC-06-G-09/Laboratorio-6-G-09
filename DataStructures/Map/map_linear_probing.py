@@ -53,8 +53,30 @@ def put(my_map, key, value):
             return my_map
         
 
-def contains():
-    pass
+def contains(my_map, key):
+    """
+    Retorna True si 'key' está en la tabla; False en caso contrario.
+    Estrategia: sonda lineal desde el índice hash hasta hallar la llave
+    o toparse con una celda nunca usada (key == None).
+    """
+    capacidad = my_map["capacity"]
+    pos = mf.hash_value(my_map, key)
+
+    for i in range(capacidad):
+        casilla = (pos + i) % capacidad
+        entrada = my_map["table"]["elements"][casilla]
+        k = entrada["key"]
+
+        # Celda nunca usada: ya no puede estar más adelante
+        if k is None:
+            return False
+
+        if k == key:
+            return True
+
+    # Se revisó toda la tabla sin hallarla
+    return False
+
 
 def get(my_map, key):
     n = my_map["capacity"]
@@ -73,8 +95,33 @@ def get(my_map, key):
     return None
     
 
-def remove():
-    pass
+def remove(my_map, key):
+    """
+    Elimina una llave del mapa (linear probing).
+    En vez de dejar el cajón en None, lo marca como "__EMPTY__"
+    para que la búsqueda linear siga funcionando.
+    """
+    capacidad = my_map["capacity"]
+    pos = mf.hash_value(my_map, key)
+
+    for i in range(capacidad):
+        casilla = (pos + i) % capacidad
+        entrada = my_map["table"]["elements"][casilla]
+
+        # cajon nunca usado -> la llave no está
+        if entrada["key"] is None:
+            return my_map
+
+        # encontramos la llave -> marcar como __EMPTY__
+        if entrada["key"] == key:
+            entrada["key"] = "__EMPTY__"
+            entrada["value"] = "__EMPTY__"
+            my_map["size"] -= 1
+            my_map["current factor"] = my_map["size"] / capacidad
+            return my_map
+
+    return my_map
+
 
 def size(my_map):
     return my_map["size"]
