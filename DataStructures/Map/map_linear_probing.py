@@ -126,3 +126,27 @@ def remove(my_map, key):
 def size(my_map):
     return my_map["size"]
 
+
+def is_empty():
+    pass
+
+
+def key_set():
+    pass
+
+
+def value_set():
+    pass
+
+
+def find_slot():
+    pass
+
+
+def is_available():
+    pass
+
+
+def rehash():
+    pass
+
