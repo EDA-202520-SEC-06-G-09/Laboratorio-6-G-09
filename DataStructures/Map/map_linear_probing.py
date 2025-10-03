@@ -8,8 +8,8 @@ def new_map(num_elements, load_factor, prime=109345121):
     llave = None
     valor = None
     capacidad =  mf.next_prime(int(num_elements/ load_factor))   
-    scale = random.randint(1, prime)
-    shift = random.randint(0, prime)
+    scale = random.randint(1, prime - 1)
+    shift = random.randint(0, prime - 1)
     
     tabla = arl.new_list()
     
@@ -135,18 +135,58 @@ def key_set():
     pass
 
 
-def value_set():
-    pass
+def value_set(my_map):
+    valores = arl.new_list()
+    capacidad = my_map["capacity"]
+    tabla = my_map["table"]["elements"]
+    
+    for pos in range(capacidad):
+        casilla = tabla[pos]
+        if casilla is not None and casilla["key"] is not None and casilla["key"] != "__EMPTY__":
+            valor = mpe.get_value(casilla)
+            arl.add_last(valores, valor)
+            
+    return valores
+    
+
+def find_slot(my_map, key, hash_value):
+   first_avail = None
+   found = False
+   ocupied = False
+   while not found:
+      if is_available(my_map["table"], hash_value):
+            if first_avail is None:
+               first_avail = hash_value
+            entry = arl.get_element(my_map["table"], hash_value)
+            if mpe.get_key(entry) is None:
+               found = True
+      elif default_compare(key, arl.get_element(my_map["table"], hash_value)) == 0:
+            first_avail = hash_value
+            found = True
+            ocupied = True
+      hash_value = (hash_value + 1) % my_map["capacity"]
+   return ocupied, first_avail
 
 
-def find_slot():
-    pass
 
+def is_available(table, pos):
+    
+   entry = arl.get_element(table, pos)
+   if mpe.get_key(entry) is None or mpe.get_key(entry) == "__EMPTY__":
+      return True
+   return False
 
-def is_available():
-    pass
 
 
 def rehash():
     pass
 
+
+
+def default_compare(key, entry):
+
+   if key == mpe.get_key(entry):
+      return 0
+   elif key > mpe.get_key(entry):
+      return 1
+   return -1
