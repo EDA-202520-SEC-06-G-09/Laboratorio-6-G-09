@@ -31,6 +31,7 @@ def new_map(num_elements, load_factor, prime=109345121):
     
     return mapa
 
+
 def put(my_map, key, value):
     
     capacidad = my_map["capacity"]
@@ -52,6 +53,7 @@ def put(my_map, key, value):
             
             return my_map
         
+        
 
 def contains(my_map, key):
     """
@@ -64,7 +66,7 @@ def contains(my_map, key):
 
     for i in range(capacidad):
         casilla = (pos + i) % capacidad
-        entrada = my_map["table"]["elements"][casilla]
+        entrada = arl.get_element(my_map["table"],casilla)
         k = entrada["key"]
 
         # Celda nunca usada: ya no puede estar más adelante
@@ -81,6 +83,7 @@ def contains(my_map, key):
 def get(my_map, key):
     n = my_map["capacity"]
     index = mf.hash_value(my_map,key)
+    
     for i in range(n):
         entrada = arl.get_element(my_map["table"], index)
         llave = entrada["key"]
@@ -106,7 +109,7 @@ def remove(my_map, key):
 
     for i in range(capacidad):
         casilla = (pos + i) % capacidad
-        entrada = my_map["table"]["elements"][casilla]
+        entrada = arl.get_element(my_map["table"],casilla)
 
         # cajon nunca usado -> la llave no está
         if entrada["key"] is None:
@@ -117,7 +120,7 @@ def remove(my_map, key):
             entrada["key"] = "__EMPTY__"
             entrada["value"] = "__EMPTY__"
             my_map["size"] -= 1
-            my_map["current factor"] = my_map["size"] / capacidad
+            my_map["current_factor"] = my_map["size"] / capacidad
             return my_map
 
     return my_map
@@ -126,13 +129,26 @@ def remove(my_map, key):
 def size(my_map):
     return my_map["size"]
 
-
 def is_empty():
     pass
 
 
-def key_set():
-    pass
+def key_set(my_map):
+    llaves = arl.new_list()
+    capacidad = my_map["capacity"]
+    tabla = my_map["table"]["elements"]
+    
+    for i in range(capacidad):
+        entrada = tabla[i]
+        if entrada is not None:
+            llave = mpe.get_key(entrada)
+            
+            if llave is not None and llave != "__EMPTY__":
+                arl.add_last(llaves,llave)
+            
+    return llaves
+            
+            
 
 
 def value_set(my_map):
@@ -178,8 +194,30 @@ def is_available(table, pos):
 
 
 
-def rehash():
-    pass
+def rehash(my_map):
+    tabla_antigua = my_map["table"]
+    capacidad_antigua = my_map["capacity"]
+    
+    capacidad_nueva =  mf.next_prime(my_map["capacity"])  
+    tabla_nueva = arl.new_list()
+    
+    for _ in range(capacidad_nueva):
+        arl.add_last(tabla_nueva, mpe.new_map_entry(None,None))
+        
+    my_map["table"] = tabla_nueva
+    my_map["capacity"] = capacidad_nueva
+    my_map["size"] = 0
+    
+    for entrada in tabla_antigua["elements"]:
+        if entrada is not None:
+            llave = mpe.get_key(entrada)
+            valor = mpe.get_value(entrada)
+        
+        if llave is not None and llave != "__EMPTY__":
+            put(my_map, llave, valor)
+        
+    return my_map
+    
 
 
 
