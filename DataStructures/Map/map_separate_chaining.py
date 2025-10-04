@@ -4,15 +4,66 @@ from DataStructures.List import array_list as arl
 from DataStructures.List import single_linked_list as sl
 import random
 
-def new_map():
-    pass
+def new_map(num_elements, load_factor, prime=109345121):
+    
+    capacidad =  mf.next_prime(int(num_elements/ load_factor))   
+    scale = random.randint(1, prime - 1)
+    shift = random.randint(0, prime - 1)
+    
+    tabla = arl.new_list()
+    
+    for i in range(capacidad):
+        cont_casilla = sl.new_list()
+        arl.add_last(tabla, cont_casilla)
+    
+    mapa = {
+        "prime":prime,
+        "capacity": capacidad, 
+        "scale": scale, 
+        "shift": shift,
+        "table": tabla,
+        "current_factor": 0, 
+        "limit_factor" : load_factor, 
+        "size": 0 
+        
+    }
+    
+    return mapa
 
-def put():
-    pass
 
+def put(my_map, key, value):
+    
+    capacidad = my_map["capacity"]
+    pos = mf.hash_value(my_map, key)
+    
+    cont_casilla = my_map["table"]["elements"][pos]
+    current = cont_casilla["first"]
+    encontrado =  False
+
+    
+    while current is not None:
+        entradas = current["info"]
+        
+        if entradas["key"] == key:
+            mpe.set_value(entradas, value)
+            encontrado = True
+        
+        
+        current = current["next"]
+        
+    if encontrado == False:
+        n_entrada = mpe.new_map_entry(key, value)
+        sl.add_last(cont_casilla, n_entrada)
+        my_map["size"] += 1
+        my_map["current factor"] = my_map["size"] / capacidad
+        
+    return my_map
+
+    
+"""
 def contains():
     pass
-
+"""
 def get(my_map,key):
     index = mf.hash_value(my_map,key)
     
@@ -27,15 +78,19 @@ def get(my_map,key):
             
     return None
             
-
+"""
 def remove():
     pass
+""" 
 
 def size(my_map):
     return my_map["size"]
 
+"""
 def is_empty():
     pass
+"""
+
 
 def key_set(my_map):
     llaves = arl.new_list()
@@ -53,9 +108,25 @@ def key_set(my_map):
                 nodo = nodo["next"]
             
     return llaves
+
+          
+def value_set(my_map):
+    
+    valores = arl.new_list()
+    capacidad = my_map["capacity"]
+    tabla = my_map["table"]["elements"]
+    
+    for pos in range(capacidad):
+        casilla = tabla[pos]
+        if casilla is not None:
+            siz = sl.size(casilla)
+            for i in range(0, siz):
+                llave = sl.get_element(casilla, i)
+                valor = mpe.get_value(llave)
+                arl.add_last(valores, valor)
             
-def value_set():
-    pass
+    return valores
+
 
 def rehash(my_map):
     tabla_antigua = my_map["table"]
@@ -83,4 +154,4 @@ def rehash(my_map):
                     put(my_map, llave, valor)
                 nodo = nodo["next"]
     return my_map
-    
+
