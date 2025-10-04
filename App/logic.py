@@ -33,9 +33,9 @@ from DataStructures.Map import map_linear_probing as lp
 from DataStructures.Map import map_separate_chaining as sc
 
 
-# TODO Realice la importación del mapa linear probing
-# TODO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
-# TODO Realice la importación del mapa separate chaining
+# TODO LISTO Realice la importación del mapa linear probing
+# TODO lISTO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
+# TODO LISTO Realice la importación del mapa separate chaining
 
 
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/GoodReads/'
@@ -58,13 +58,13 @@ def new_logic():
 
     #Tabla de Hash que contiene los libros indexados por good_reads_book_id  
     #(good_read_id -> book)
-    catalog['books_by_id'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
+    catalog['books_by_id'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (author_name -> List(books))
-    catalog['books_by_authors'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
+    catalog['books_by_authors'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_name -> tag)
-    catalog['tags'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
+    catalog['tags'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_id -> book_tags)
     catalog['book_tags'] = lp.new_map(1000,0.7)
@@ -79,7 +79,7 @@ def new_logic():
 # Funciones para la carga de datos
 #  -------------------------------------------------------------
 
-#TODO incorporar las funciones para toma de tiempo y memoria
+#TODO LISTO incorporar las funciones para toma de tiempo y memoria
     
 
 def load_data(catalog):
@@ -257,12 +257,13 @@ def get_book_info_by_book_id(catalog, good_reads_book_id):
     start_memory = getMemory()
     
     #ACA VA EL CODIGO
+    #TODO Completar función de consulta
     
     stop_memory = getMemory()
     end_time = getTime()
     tiempo_transcurrido = deltaTime(end_time, start_time)
     memoria_usada = deltaMemory(start_memory, stop_memory)
-    #TODO Completar función de consulta
+    
     return book, tiempo_transcurrido, memoria_usada
 
 
@@ -275,12 +276,13 @@ def get_books_by_author(catalog, author_name):
     start_memory = getMemory()
     
     #ACA VA EL CODIGO
+    #TODO Completar función de consulta
     
     stop_memory = getMemory()
     end_time = getTime()
     tiempo_transcurrido = deltaTime(end_time, start_time)
     memoria_usada = deltaMemory(start_memory, stop_memory)
-    #TODO Completar función de consulta
+    
     
     return author, author_book_list, tiempo_transcurrido, memoria_usada
 
@@ -300,12 +302,13 @@ def get_books_by_tag(catalog, tag_name):
     start_memory = getMemory()
     
     #ACA VA EL CODIGO
+    #TODO Completar función de consulta 
     
     stop_memory = getMemory()
     end_time = getTime()
     tiempo_transcurrido = deltaTime(end_time, start_time)
     memoria_usada = deltaMemory(start_memory, stop_memory)
-    #TODO Completar función de consulta
+   
     return book_list_by_tag, tiempo_transcurrido, memoria_usada
 
 

@@ -28,8 +28,8 @@ import sys
 import App.logic as logic
 import time
 import tracemalloc
-# TODO Realice la importación del mapa linear probing
-# TODO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
+# TODO LISTO Realice la importación del mapa linear probing
+# TODO LISTO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
 from DataStructures.List import array_list as al
 from DataStructures.Map import map_linear_probing as lp
 
@@ -47,20 +47,11 @@ def new_logic():
     """
     Se crea una instancia del controlador
     """
-    start_time = logic.getTime()
-    tracemalloc.start()
-    start_memory = logic.getMemory()
-    
     control = logic.new_logic()
-    
-    stop_memory = logic.getMemory()
-    end_time = logic.getTime()
-    tiempo_transcurrido = logic.deltaTime(end_time, start_time)
-    memoria_usada = logic.deltaMemory(start_memory, stop_memory)
-   
+
     return control
 
-# TODO Incluir las mediciones de tiempo y uso de memoria en la ejecución de la consulta.
+# TODO LISTO Incluir las mediciones de tiempo y uso de memoria en la ejecución de la consulta.
 def load_data(control):
     """
     Solicita a la controlador que cargue los datos
@@ -180,7 +171,7 @@ def main():
     while working:
         print_menu()
         inputs = input("Seleccione una opción para continuar\n")
-        # TODO agregar tiempo de ejecución y consumo de memoria
+        # TODO LISTO agregar tiempo de ejecución y consumo de memoria
         if int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg, tiempo_transcurrido, memoria_usada = load_data(control)
