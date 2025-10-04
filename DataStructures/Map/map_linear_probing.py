@@ -86,12 +86,12 @@ def get(my_map, key):
     
     for i in range(n):
         entrada = arl.get_element(my_map["table"], index)
-        llave = entrada["key"]
+        llave = mpe.get_key(entrada)
         if llave is None:
             return None
         
         if key == llave:
-            return entrada["value"]
+            return mpe.get_value(entrada)
         
         index = (index +1) %n
         
@@ -198,7 +198,7 @@ def rehash(my_map):
     tabla_antigua = my_map["table"]
     capacidad_antigua = my_map["capacity"]
     
-    capacidad_nueva =  mf.next_prime(my_map["capacity"])  
+    capacidad_nueva =  mf.next_prime(capacidad_antigua)  
     tabla_nueva = arl.new_list()
     
     for _ in range(capacidad_nueva):
