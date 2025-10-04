@@ -58,20 +58,20 @@ def new_logic():
 
     #Tabla de Hash que contiene los libros indexados por good_reads_book_id  
     #(good_read_id -> book)
-    catalog['books_by_id'] = None #TODO completar la creación del mapa
+    catalog['books_by_id'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (author_name -> List(books))
-    catalog['books_by_authors'] = None #TODO completar la creación del mapa
+    catalog['books_by_authors'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_name -> tag)
-    catalog['tags'] = None #TODO completar la creación del mapa
+    catalog['tags'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_id -> book_tags)
     catalog['book_tags'] = lp.new_map(1000,0.7)
 
     #Tabla de Hash principal que contiene sub-mapas dentro de los valores
     #con la siguiente representación de la pareja llave valor: (author_name -> (original_publication_year -> list(books)))
-    catalog['books_by_year_author'] = None #TODO completar la creación del mapa
+    catalog['books_by_year_author'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
     
     return catalog
 
@@ -80,6 +80,8 @@ def new_logic():
 #  -------------------------------------------------------------
 
 #TODO incorporar las funciones para toma de tiempo y memoria
+    
+
 def load_data(catalog):
     """
     Carga los datos de los archivos y cargar los datos en la
@@ -250,16 +252,37 @@ def get_book_info_by_book_id(catalog, good_reads_book_id):
     """
     Retorna toda la informacion que se tenga almacenada de un libro según su good_reads_id.
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
+    
+    #ACA VA EL CODIGO
+    
+    stop_memory = getMemory()
+    end_time = getTime()
+    tiempo_transcurrido = deltaTime(end_time, start_time)
+    memoria_usada = deltaMemory(start_memory, stop_memory)
     #TODO Completar función de consulta
-    pass
+    return book, tiempo_transcurrido, memoria_usada
 
 
 def get_books_by_author(catalog, author_name):
     """
     Retorna los libros asociado al autor ingresado por párametro
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
+    
+    #ACA VA EL CODIGO
+    
+    stop_memory = getMemory()
+    end_time = getTime()
+    tiempo_transcurrido = deltaTime(end_time, start_time)
+    memoria_usada = deltaMemory(start_memory, stop_memory)
     #TODO Completar función de consulta
-    pass
+    
+    return author, author_book_list, tiempo_transcurrido, memoria_usada
 
 
 def get_books_by_tag(catalog, tag_name):
@@ -272,8 +295,18 @@ def get_books_by_tag(catalog, tag_name):
     de book_tags y finalmente relacionarlo con los datos completos del libro.
 
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
+    
+    #ACA VA EL CODIGO
+    
+    stop_memory = getMemory()
+    end_time = getTime()
+    tiempo_transcurrido = deltaTime(end_time, start_time)
+    memoria_usada = deltaMemory(start_memory, stop_memory)
     #TODO Completar función de consulta
-    pass
+    return book_list_by_tag, tiempo_transcurrido, memoria_usada
 
 
 def get_books_by_author_pub_year(catalog, author_name, pub_year):
