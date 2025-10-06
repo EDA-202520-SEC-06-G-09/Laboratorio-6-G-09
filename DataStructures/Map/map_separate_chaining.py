@@ -55,7 +55,10 @@ def put(my_map, key, value):
         n_entrada = mpe.new_map_entry(key, value)
         sl.add_last(cont_casilla, n_entrada)
         my_map["size"] += 1
-        my_map["current factor"] = my_map["size"] / capacidad
+        my_map["current_factor"] = my_map["size"] / capacidad
+        
+    if my_map["current_factor"] > my_map["limit_factor"]:
+        rehash(my_map)
         
     return my_map
 
@@ -132,7 +135,7 @@ def rehash(my_map):
     tabla_antigua = my_map["table"]
     capacidad_antigua = my_map["capacity"]
     
-    capacidad_nueva =  mf.next_prime(capacidad_antigua)  
+    capacidad_nueva =  mf.next_prime(capacidad_antigua*2)  
     tabla_nueva = arl.new_list()
     
     for _ in range(capacidad_nueva):
