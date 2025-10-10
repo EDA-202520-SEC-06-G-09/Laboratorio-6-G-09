@@ -63,10 +63,18 @@ def put(my_map, key, value):
     return my_map
 
     
-"""
-def contains():
-    pass
-"""
+def contains(my_map, key):
+    
+    index = mf.hash_value(my_map, key)
+    lista = arl.get_element(my_map["table"], index)
+
+    nodo = lista["first"]
+    while nodo is not None:
+        if mpe.get_key(nodo["info"]) == key:
+            return True
+        nodo = nodo["next"]
+    return False
+
 def get(my_map,key):
     index = mf.hash_value(my_map,key)
     
@@ -81,18 +89,63 @@ def get(my_map,key):
             
     return None
             
-"""
-def remove():
-    pass
-""" 
+def remove(my_map, key):
+
+    index = mf.hash_value(my_map, key)
+    lista = arl.get_element(my_map["table"], index)
+
+    if lista["first"] is None:
+        return None
+
+    # se recorre con puntero previo para poder desencadenar el nodo
+    prev = None
+    current = lista["first"]
+
+    while current is not None:
+        entry = current["info"]
+        if mpe.get_key(entry) == key:
+            # guardamos valor a retornar
+            removed_value = mpe.get_value(entry)
+
+            # desencadenar: caso 1, es el primero
+            if prev is None:
+                lista["first"] = current["next"]
+            else:
+                prev["next"] = current["next"]
+
+            # si la lista maneja 'last' y quitamos el último, actualizamos
+            if "last" in lista and current["next"] is None:
+                lista["last"] = prev
+
+            # disminuir tamaño interno de la lista si existe el campo
+            if "size" in lista:
+                lista["size"] -= 1
+
+            # actualizar tamaño del mapa y factor de carga
+            my_map["size"] -= 1
+            if my_map["capacity"] > 0:
+                my_map["current_factor"] = my_map["size"] / my_map["capacity"]
+            else:
+                my_map["current_factor"] = 0
+
+            return removed_value
+
+        # avanzar
+        prev = current
+        current = current["next"]
+
+    # no se encontro la llave
+    return None
+
+
+def is_empty(my_map):
+    """
+    Retorna True si el mapa no tiene elementos, False en caso contrario.
+    """
+    return my_map["size"] == 0
 
 def size(my_map):
     return my_map["size"]
-
-"""
-def is_empty():
-    pass
-"""
 
 
 def key_set(my_map):
