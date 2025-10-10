@@ -71,7 +71,7 @@ def new_logic():
 
     #Tabla de Hash principal que contiene sub-mapas dentro de los valores
     #con la siguiente representación de la pareja llave valor: (author_name -> (original_publication_year -> list(books)))
-    catalog['books_by_year_author'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
+    catalog['books_by_year_author'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
     
     return catalog
 
@@ -202,7 +202,11 @@ def add_book_author_and_year(catalog, author_name, book):
     books_by_year_author = catalog['books_by_year_author']
     pub_year = book['original_publication_year']
     #Si el año de publicación está vacío se reemplaza por un valor simbolico
-    #TODO Completar manejo de los escenarios donde el año de publicación es vacío.
+    #TODO LISTO Completar manejo de los escenarios donde el año de publicación es vacío.
+    
+    if not pub_year:
+        pub_year = "__EMPTY__"
+    
     author_value = lp.get(books_by_year_author,author_name)
     if author_value:
         pub_year_value = lp.get(author_value,pub_year)
@@ -214,7 +218,15 @@ def add_book_author_and_year(catalog, author_name, book):
             pub_year_map = lp.new_map(1000,0.7)
             lp.put(pub_year_map,pub_year,book)
     else:
-        pass # TODO Completar escenario donde no se había agregado el autor al mapa principal
+        
+        author_map = lp.new_map(1000, 0.7)
+        books = al.new_list()
+        al.add_last(books, book)
+        lp.put(author_map, pub_year, books)
+        lp.put(books_by_year_author, author_name, author_map)
+        
+        
+         # TODO LISTO Completar escenario donde no se había agregado el autor al mapa principal
     return catalog
 
 
@@ -222,8 +234,10 @@ def add_tag(catalog, tag):
     """
     Adiciona un tag al mapa de tags indexado por nombre del tag
     """
-    t = new_tag(tag['tag_name'], tag['tag_id'])
-    lp.put(catalog['tags'],tag['tag_name'],t)
+    name = (tag['tag_name'] or '').strip()
+    tid  = (tag['tag_id'] or '').strip()
+    t = new_tag(name, tid)
+    lp.put(catalog['tags'], name, t)
     return catalog
 
 
@@ -237,11 +251,15 @@ def add_book_tag(catalog, book_tag):
     """
     t = new_book_tag(book_tag['tag_id'], book_tag['goodreads_book_id'], book_tag['count'])
     book_tag_value = lp.contains(catalog['book_tags'],t['tag_id'])
+    
     if book_tag_value:
         book_tag_list = lp.get(catalog['book_tags'],t['tag_id'])
         al.add_last(book_tag_list,book_tag)
     else:
-        pass #TODO Completar escenario donde el book_tag no se había agregado al mapa   
+        new_list = al.new_list() #TODO
+        al.add_last(new_list, book_tag)
+        lp.put(catalog['book_tags'], t['tag_id'], new_list)   
+        #TODO LISTO Completar escenario donde el book_tag no se había agregado al mapa   
     return catalog
 
 #  -------------------------------------------------------------
@@ -257,7 +275,10 @@ def get_book_info_by_book_id(catalog, good_reads_book_id):
     start_memory = getMemory()
     
     #ACA VA EL CODIGO
-    #TODO Completar función de consulta
+    #TODO LISTO Completar función de consulta
+    
+    book_id_str = str(good_reads_book_id)
+    book = lp.get(catalog['books_by_id'], book_id_str)
     
     stop_memory = getMemory()
     end_time = getTime()
@@ -276,7 +297,13 @@ def get_books_by_author(catalog, author_name):
     start_memory = getMemory()
     
     #ACA VA EL CODIGO
-    #TODO Completar función de consulta
+    author = author_name
+    
+    author_book_list = lp.get(catalog['books_by_authors'], author_name)
+    if not author_book_list:
+        author_book_list = al.new_list()
+    
+    #TODO LISTO Completar función de consulta
     
     stop_memory = getMemory()
     end_time = getTime()
