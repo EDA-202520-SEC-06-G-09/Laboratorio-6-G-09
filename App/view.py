@@ -122,19 +122,19 @@ def print_books_by_tag(tag_name, books_by_tag, tiempo_transcurrido, memoria_usad
     Recorre la lista de libros asociados a un tag, imprimiendo
     la información solicitada.
     """
-    if books_by_tag:
+    count = al.size(books_by_tag) if books_by_tag else 0
+    if count > 0:
         print("Tag encontrado: " + tag_name)
-        for book_pos in range(0, al.size(books_by_tag)):
-            book = al.get_element(books_by_tag, book_pos)
+        for i in range(count):
+            book = al.get_element(books_by_tag, i)
             print('Titulo: ' + book['title'] + '  ISBN: ' +
                   book['isbn'] + ' Rating: ' + book['average_rating'] +
-                    ' Work text reviews count : ' + book['work_text_reviews_count'])
+                  ' Work text reviews count : ' + book['work_text_reviews_count'])
     else:
-        print("No se encontró el tag") 
-    
+        print("No se encontró el tag o no hay libros asociados en el dataset")
     print(f"\nTiempo transcurrido: {tiempo_transcurrido:.2f} ms")
     print(f"Memoria utilizada: {memoria_usada:.2f} kB\n")
-        
+
 def print_books_by_auth_year(author, pub_year, books_by_author_year, tiempo_transcurrido, memoria_usada):
     """
     Recorre la lista de libros de un autor para un año de publicación específico, 

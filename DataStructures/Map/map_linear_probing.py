@@ -129,8 +129,8 @@ def remove(my_map, key):
 def size(my_map):
     return my_map["size"]
 
-def is_empty():
-    pass
+def is_empty(my_map):
+    return my_map["size"] == 0
 
 
 def key_set(my_map):
