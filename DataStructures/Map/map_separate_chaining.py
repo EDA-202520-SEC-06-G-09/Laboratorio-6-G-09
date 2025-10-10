@@ -210,4 +210,3 @@ def rehash(my_map):
                     put(my_map, llave, valor)
                 nodo = nodo["next"]
     return my_map
-
