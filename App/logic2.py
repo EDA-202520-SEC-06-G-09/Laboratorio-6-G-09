@@ -29,8 +29,8 @@ import csv
 import time
 import tracemalloc
 from DataStructures.List import array_list as al
-from DataStructures.Map import map_linear_probing as sc
-from DataStructures.Map import map_separate_chaining as lp
+from DataStructures.Map import map_linear_probing as lp
+from DataStructures.Map import map_separate_chaining as sc
 
 
 # TODO LISTO Realice la importación del mapa linear probing
@@ -58,20 +58,20 @@ def new_logic():
 
     #Tabla de Hash que contiene los libros indexados por good_reads_book_id  
     #(good_read_id -> book)
-    catalog['books_by_id'] = lp.new_map(1000,0.1) #TODO LISTO completar la creación del mapa
+    catalog['books_by_id'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (author_name -> List(books))
-    catalog['books_by_authors'] = lp.new_map(1000,0.1) #TODO LISTO completar la creación del mapa
+    catalog['books_by_authors'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_name -> tag)
-    catalog['tags'] = lp.new_map(1000,0.1) #TODO LISTO completar la creación del mapa
+    catalog['tags'] = lp.new_map(1000,0.7) #TODO LISTO completar la creación del mapa
 
     #Tabla de Hash con la siguiente pareja llave valor: (tag_id -> book_tags)
-    catalog['book_tags'] = lp.new_map(1000,0.1)
+    catalog['book_tags'] = lp.new_map(1000,0.7)
 
     #Tabla de Hash principal que contiene sub-mapas dentro de los valores
     #con la siguiente representación de la pareja llave valor: (author_name -> (original_publication_year -> list(books)))
-    catalog['books_by_year_author'] = lp.new_map(1000,0.1) #TODO completar la creación del mapa
+    catalog['books_by_year_author'] = lp.new_map(1000,0.7) #TODO completar la creación del mapa
     
     return catalog
 
@@ -99,7 +99,7 @@ def load_books(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = os.path.join(data_dir, 'books-small.csv')
+    booksfile = os.path.join(data_dir, 'books.csv')
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for book in input_file:
         add_book(catalog, book)
