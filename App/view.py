@@ -25,7 +25,7 @@
  """
 
 import sys
-import App.logic as logic
+from App import logic2 as logic
 import time
 import tracemalloc
 # TODO LISTO Realice la importación del mapa linear probing
@@ -66,6 +66,7 @@ def load_data(control):
     end_time = logic.getTime()
     tiempo_transcurrido = logic.deltaTime(end_time, start_time)
     memoria_usada = logic.deltaMemory(start_memory, stop_memory)
+    tracemalloc.stop()
     
     return books, authors, tags, book_tags, tiempo_transcurrido,memoria_usada
 
